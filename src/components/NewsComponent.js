@@ -9,13 +9,20 @@ export default class NewsComponent extends Component {
       articles : []
     }
   }
-  async componentDidMount(){
-    let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=dbe57b028aeb41e285a226a94865f7a7";
+  // async componentDidMount(){
+  //   let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=dbe57b028aeb41e285a226a94865f7a7";
+  //   let data = await fetch(url);
+  //   let parsedData = await data.json();
+  //   console.log(parsedData)
+  //   this.setState({articles: parsedData.articles})
+  // }
+  async componentDidMount() {
+    let url = "/api/news?country=us"; // Call the serverless function
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log(parsedData)
-    this.setState({articles: parsedData.articles})
-  }
+    console.log(parsedData);
+    this.setState({articles: parsedData.articles});
+}
   render() {
     return (
       <div className='container my-3'>
