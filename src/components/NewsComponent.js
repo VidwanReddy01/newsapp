@@ -8,7 +8,8 @@ export default class NewsComponent extends Component {
     this.state = {
       articles : [],
       loading: false,
-      page: 1
+      page: 1,
+      country: 'us'
     }
   }
 
