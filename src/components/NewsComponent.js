@@ -39,11 +39,11 @@ export default class NewsComponent extends Component {
     // let parsedData = await data.json();
     // // console.log(parsedData);
     // this.setState({articles: parsedData.articles});
-    this.fetchData()
+    this.fetchData();
  }
 
     fetchData = async () => {
-  let url = `"/api/news?country=us&page=${this.state.page}&pageSize=10"`;
+  let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
   let data = await fetch(url);
   let parsedData = await data.json();
   // console.log(parsedData)
