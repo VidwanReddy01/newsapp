@@ -6,23 +6,77 @@ export default class NewsComponent extends Component {
     super()
     console.log('This is in constructor')
     this.state = {
-      articles : []
+      articles : [],
+      loading: false,
+      page: 1
     }
   }
-  // async componentDidMount(){
-  //   let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=dbe57b028aeb41e285a226a94865f7a7";
-  //   let data = await fetch(url);
-  //   let parsedData = await data.json();
-  //   console.log(parsedData)
-  //   this.setState({articles: parsedData.articles})
-  // }
-  async componentDidMount() {
-    let url = "/api/news?country=us"; // Call the serverless function
+
+  //To work in local START
+  async componentDidMount(){
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log(parsedData);
-    this.setState({articles: parsedData.articles});
-}
+    // console.log(parsedData)
+    this.setState({articles: parsedData.articles})
+  }
+
+  fetchData = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    // console.log(parsedData)
+    this.setState({articles: parsedData.articles})
+    this.setState({totalResults: parsedData.totalResults})
+  }
+  //To work in local END
+
+  //To work in vercel app START
+//   async componentDidMount() {
+//     let url = "/api/news?country=us"; // Call the serverless function
+//     let data = await fetch(url);
+//     let parsedData = await data.json();
+//     // console.log(parsedData);
+//     this.setState({articles: parsedData.articles});
+//  }
+  //To work in vercel app END
+
+
+  handlePrevClick = ()=> {
+    console.log("Previous button clicked!")
+    this.setState(
+      (prevState) => ({
+          page: prevState.page - 1,
+      }),
+      () => {
+          console.log(this.state.page, "this.state.page previous before");
+          this.fetchData();
+      }
+    );
+   console.log(this.state.page, 'this.state.page previous after')
+  }
+
+  handleNextClick = ()=> {
+    console.log("Next button clicked!")
+    this.setState(
+      (prevState) => ({
+          page: prevState.page + 1,
+      }),
+      () => {
+
+          console.log(this.state.page, "this.state.page next before");
+          this.setState()
+          if (this.state.page > Math.ceil(this.state.totalResults/10)){
+
+          }
+          else{
+          this.fetchData();
+          }
+      }
+    );
+    console.log(this.state.page, 'this.state.page next after')
+  }
+
   render() {
     return (
       <div className='container my-3'>
@@ -42,6 +96,12 @@ export default class NewsComponent extends Component {
                                   ) 
           }
              
+          </div>
+          <div className="container d-flex justify-content-end">
+            <div className="btn-group" role="group" aria-label="Basic outlined example">
+              <button disabled={this.state.page<=1} type="button" onClick={this.handlePrevClick} className="btn btn-outline-primary">Previous</button>  {/* //this.handlePrevClick, here we are using this. becase we are use class based component */}
+              <button disabled={this.state.page>= Math.ceil(this.state.totalResults/10)} type="button" onClick={this.handleNextClick} className="btn btn-outline-primary">Next</button>  {/* //this.handleNextClick, here we are using this. becase we are use class based component */}
+            </div>
           </div>
         
       </div>
