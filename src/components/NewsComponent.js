@@ -12,24 +12,45 @@ export default class NewsComponent extends Component {
     }
   }
 
-  //To work in local START
-  async componentDidMount(){
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    // console.log(parsedData)
-    this.setState({articles: parsedData.articles})
-  }
+  // //To work in local START
+  // async componentDidMount(){
+  //   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
+  //   let data = await fetch(url);
+  //   let parsedData = await data.json();
+  //   // console.log(parsedData)
+  //   this.setState({articles: parsedData.articles})
+  // }
 
-  fetchData = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
+  // fetchData = async () => {
+  //   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
+  //   let data = await fetch(url);
+  //   let parsedData = await data.json();
+  //   // console.log(parsedData)
+  //   this.setState({articles: parsedData.articles})
+  //   this.setState({totalResults: parsedData.totalResults})
+  // }
+  // //To work in local END
+
+    // To work in vercel app START
+  async componentDidMount() {
+    let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
     let data = await fetch(url);
     let parsedData = await data.json();
-    // console.log(parsedData)
-    this.setState({articles: parsedData.articles})
-    this.setState({totalResults: parsedData.totalResults})
-  }
-  //To work in local END
+    // console.log(parsedData);
+    this.setState({articles: parsedData.articles});
+ }
+
+    fetchData = async () => {
+  let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
+  let data = await fetch(url);
+  let parsedData = await data.json();
+  // console.log(parsedData)
+  this.setState({articles: parsedData.articles})
+  this.setState({totalResults: parsedData.totalResults})
+}
+  //To work in vercel app END
+
+
 
   //To work in vercel app START
 //   async componentDidMount() {
