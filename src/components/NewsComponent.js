@@ -14,11 +14,12 @@ export default class NewsComponent extends Component {
 
   // //To work in local START
   // async componentDidMount(){
-  //   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
-  //   let data = await fetch(url);
-  //   let parsedData = await data.json();
-  //   // console.log(parsedData)
-  //   this.setState({articles: parsedData.articles})
+  //   // let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
+  //   // let data = await fetch(url);
+  //   // let parsedData = await data.json();
+  //   // // console.log(parsedData)
+  //   // this.setState({articles: parsedData.articles})
+  //   this.fetchData()
   // }
 
   // fetchData = async () => {
@@ -33,15 +34,16 @@ export default class NewsComponent extends Component {
 
     // To work in vercel app START
   async componentDidMount() {
-    let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
-    let data = await fetch(url);
-    let parsedData = await data.json();
-    // console.log(parsedData);
-    this.setState({articles: parsedData.articles});
+    // let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
+    // let data = await fetch(url);
+    // let parsedData = await data.json();
+    // // console.log(parsedData);
+    // this.setState({articles: parsedData.articles});
+    this.fetchData()
  }
 
     fetchData = async () => {
-  let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
+  let url = `"/api/news?country=us&page=${this.state.page}&pageSize=10"`;
   let data = await fetch(url);
   let parsedData = await data.json();
   // console.log(parsedData)
