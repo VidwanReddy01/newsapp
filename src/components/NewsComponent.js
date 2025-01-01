@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NewsItemComponent from './NewsItemComponent'
+import Spinner from './Spinner.js'
 
 export default class NewsComponent extends Component {
   constructor(){
@@ -15,55 +16,38 @@ export default class NewsComponent extends Component {
 
   // //To work in local START
   // async componentDidMount(){
-  //   // let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
-  //   // let data = await fetch(url);
-  //   // let parsedData = await data.json();
-  //   // // console.log(parsedData)
-  //   // this.setState({articles: parsedData.articles})
   //   this.fetchData()
   // }
 
   // fetchData = async () => {
-  //   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=10`;
+  //   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+  //   this.setState({loading:true})
   //   let data = await fetch(url);
   //   let parsedData = await data.json();
   //   // console.log(parsedData)
   //   this.setState({articles: parsedData.articles})
   //   this.setState({totalResults: parsedData.totalResults})
+  //   this.setState({loading:false})
   // }
   // //To work in local END
 
-    // To work in vercel app START
+  // To work in vercel app START
   async componentDidMount() {
-    // let url = `/api/news?country=us&page=${this.state.page}&pageSize=10`;
-    // let data = await fetch(url);
-    // let parsedData = await data.json();
-    // // console.log(parsedData);
-    // this.setState({articles: parsedData.articles});
     this.fetchData();
  }
 
-    fetchData = async () => {
-  let url = `/api/news?country=${this.state.country}&page=${this.state.page}&pageSize=10`;
-  let data = await fetch(url);
-  let parsedData = await data.json();
-  // console.log(parsedData)
-  this.setState({articles: parsedData.articles})
-  this.setState({totalResults: parsedData.totalResults})
+  fetchData = async () => {
+      let url = `/api/news?country=${this.state.country}&page=${this.state.page}&pageSize=10`;
+      this.setState({loading:true})
+      let data = await fetch(url);
+      let parsedData = await data.json();
+      // console.log(parsedData)
+      this.setState({articles: parsedData.articles})
+      this.setState({totalResults: parsedData.totalResults})
+      this.setState({loading:false})
 }
   //To work in vercel app END
 
-
-
-  //To work in vercel app START
-//   async componentDidMount() {
-//     let url = "/api/news?country=us"; // Call the serverless function
-//     let data = await fetch(url);
-//     let parsedData = await data.json();
-//     // console.log(parsedData);
-//     this.setState({articles: parsedData.articles});
-//  }
-  //To work in vercel app END
 
 
   handlePrevClick = ()=> {
@@ -90,7 +74,7 @@ export default class NewsComponent extends Component {
 
           console.log(this.state.page, "this.state.page next before");
           this.setState()
-          if (this.state.page > Math.ceil(this.state.totalResults/10)){
+          if (this.state.page > Math.ceil(this.state.totalResults/this.props.pageSize)){
 
           }
           else{
@@ -105,10 +89,11 @@ export default class NewsComponent extends Component {
     return (
       <div className='container my-3'>
         {/* {this.state.articles.map((element)=>{console.log(element)})} */}
-
+        
         <h2 className='my-4'>Top headlines</h2>
+        {this.state.loading && <Spinner/>}
           <div className="row">
-          {this.state.articles.map((element)=>
+          {!this.state.loading && this.state.articles.map((element)=>
             { return <div className='col-md-4' key={element.url} style={{maxHeight:'30rem', minHeight:'30rem'}}>
               <NewsItemComponent 
               title={element.title?element.title.slice(0,45):"No title found"} 
@@ -124,7 +109,7 @@ export default class NewsComponent extends Component {
           <div className="container d-flex justify-content-end">
             <div className="btn-group" role="group" aria-label="Basic outlined example">
               <button disabled={this.state.page<=1} type="button" onClick={this.handlePrevClick} className="btn btn-outline-primary">Previous</button>  {/* //this.handlePrevClick, here we are using this. becase we are use class based component */}
-              <button disabled={this.state.page>= Math.ceil(this.state.totalResults/10)} type="button" onClick={this.handleNextClick} className="btn btn-outline-primary">Next</button>  {/* //this.handleNextClick, here we are using this. becase we are use class based component */}
+              <button disabled={this.state.page>= Math.ceil(this.state.totalResults/this.props.pageSize)} type="button" onClick={this.handleNextClick} className="btn btn-outline-primary">Next</button>  {/* //this.handleNextClick, here we are using this. becase we are use class based component */}
             </div>
           </div>
         
