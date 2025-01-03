@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import NewsItemComponent from './NewsItemComponent'
 import Spinner from './Spinner.js'
+import PropTypes from 'prop-types'
 
 export default class NewsComponent extends Component {
+  static defaultProps = {
+    country: 'in',
+    pageSize: 5   //when the pageSize is not passed in App.js in NewsComponent component, this default value is taken
+  }
+  static propTypes = {
+    country: PropTypes.string,
+    pageSize: PropTypes.number
+    }
   constructor(){
     super()
     console.log('This is in constructor')
@@ -10,7 +19,8 @@ export default class NewsComponent extends Component {
       articles : [],
       loading: false,
       page: 1,
-      country: 'us'
+      country: 'us',
+      category: ''
     }
   }
 
@@ -20,7 +30,7 @@ export default class NewsComponent extends Component {
   // }
 
   // fetchData = async () => {
-  //   let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=fa1de05a901446959341d884be639149&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+  //   let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=fa1de05a901446959341d884be639149&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
   //   this.setState({loading:true})
   //   let data = await fetch(url);
   //   let parsedData = await data.json();
@@ -37,7 +47,7 @@ export default class NewsComponent extends Component {
  }
 
   fetchData = async () => {
-      let url = `/api/news?country=${this.state.country}&page=${this.state.page}&pageSize=10`;
+      let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
       this.setState({loading:true})
       let data = await fetch(url);
       let parsedData = await data.json();
