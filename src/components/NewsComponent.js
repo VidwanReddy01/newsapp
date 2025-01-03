@@ -107,16 +107,19 @@ export default class NewsComponent extends Component {
       <div className='container my-3'>
         {/* {this.state.articles.map((element)=>{console.log(element)})} */}
         
-        <h2 className='my-4'>Top headlines</h2>
+        <h2 className='my-4'>Top headlines - {this.props.category}</h2>
         {this.state.loading && <Spinner/>}
           <div className="row">
           {!this.state.loading && this.state.articles.map((element)=>
-            { return <div className='col-md-4' key={element.url} style={{maxHeight:'30rem', minHeight:'30rem'}}>
+            { return <div className='col-md-4' key={element.url} style={{maxHeight:'35rem', minHeight:'35rem'}}>
               <NewsItemComponent 
               title={element.title?element.title.slice(0,45):"No title found"} 
               description={element.description?element.description.slice(0,60):"No description found"} 
               imageUrl={element.urlToImage}
-              newsUrl={element.url}/>
+              newsUrl={element.url}
+              author={element.author}
+              publishedAt={element.publishedAt}
+              source={element.source.name}/>
               </div>
             }
                                   ) 
