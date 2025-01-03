@@ -17,13 +17,13 @@ export default class App extends Component {
         <Navbar/>
         <Routes>
         <Route exact path="/" element={<NewsComponent pageSize={10} category={''}/>}></Route>
-        <Route exact path="/business" element={<NewsComponent pageSize={10} category={'business'} onClick={this.fetchData}/>}></Route>
-        <Route exact path="/entertainment" element={<NewsComponent pageSize={10} category={'entertainment'}/>}></Route>
-        <Route exact path="/health" element={<NewsComponent pageSize={10} category={'health'}/>}></Route>
-        <Route exact path="/science" element={<NewsComponent pageSize={10} category={'science'}/>}></Route>
-        <Route exact path="/sports" element={<NewsComponent pageSize={10} category={'sports'}/>}></Route>
-        <Route exact path="/technology" element={<NewsComponent pageSize={10} category={'technology'}/>}></Route>
-        <Route exact path="/general" element={<NewsComponent pageSize={10} category={''}/>}></Route>
+        <Route exact path="/business" element={<NewsComponent key="business" pageSize={10} category={'business'}/>}></Route>
+        <Route exact path="/entertainment" element={<NewsComponent key="entertainment" pageSize={10} category={'entertainment'}/>}></Route>
+        <Route exact path="/health" element={<NewsComponent key="health" pageSize={10} category={'health'}/>}></Route>
+        <Route exact path="/science" element={<NewsComponent key="science" pageSize={10} category={'science'}/>}></Route>
+        <Route exact path="/sports" element={<NewsComponent key="science" pageSize={10} category={'sports'}/>}></Route>
+        <Route exact path="/technology" element={<NewsComponent key="technology" pageSize={10} category={'technology'}/>}></Route>
+        <Route exact path="/general" element={<NewsComponent key="general" pageSize={10} category={'general'}/>}></Route>
         </Routes>
         </Router>
       </div>   
