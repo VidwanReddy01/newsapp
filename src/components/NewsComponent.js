@@ -48,13 +48,19 @@ export default class NewsComponent extends Component {
 
   fetchData = async () => {
       let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+      console.log(url,'this is url')
       this.setState({loading:true})
       let data = await fetch(url);
       let parsedData = await data.json();
       // console.log(parsedData)
-      this.setState({articles: parsedData.articles})
-      this.setState({totalResults: parsedData.totalResults})
-      this.setState({loading:false})
+      // this.setState({articles: parsedData.articles})
+      // this.setState({totalResults: parsedData.totalResults})
+      // this.setState({loading:false})
+      this.setState({
+        articles: parsedData.articles,
+        totalResults: parsedData.totalResults,
+        loading:false,
+    });
 }
   //To work in vercel app END
 
