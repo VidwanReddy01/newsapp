@@ -7,6 +7,7 @@ export default async function handler(req, res) {
 
     // const url = `${baseUrl}?country=${country}&apiKey=${apiKey}`;
     const url = `${baseUrl}?country=${country}&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}`;
+    console.log(url,'base url from api folder')
 
     try {
         const response = await fetch(url);
