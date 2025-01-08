@@ -24,82 +24,67 @@ export default class NewsComponent extends Component {
     }
   }
 
-  // //To work in local START
-  // async componentDidMount(){
-  //   this.fetchData()
-  // }
-
-  // fetchData = async () => {
-  //   let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=fa1de05a901446959341d884be639149&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-  //   console.log(url,'this is url')
-  //   this.setState({loading:true})
-  //   let data = await fetch(url);
-  //   let parsedData = await data.json();
-  //   // console.log(parsedData)
-  //   this.setState({articles: parsedData.articles})
-  //   this.setState({totalResults: parsedData.totalResults})
-  //   this.setState({loading:false})
-  // }
-  // //To work in local END
-
-  // To work in vercel app START
-  async componentDidMount() {
-    this.fetchData();
- }
+  //To work in local START
+  async componentDidMount(){
+    this.fetchData()
+  }
 
   fetchData = async () => {
-      let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-      console.log(url,'this is url')
-      this.setState({loading:true})
-      let data = await fetch(url);
-      let parsedData = await data.json();
-      // console.log(parsedData)
-      // this.setState({articles: parsedData.articles})
-      // this.setState({totalResults: parsedData.totalResults})
-      // this.setState({loading:false})
-      this.setState({
-        articles: parsedData.articles,
-        totalResults: parsedData.totalResults,
-        loading:false,
-    });
-}
-  //To work in vercel app END
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=fa1de05a901446959341d884be639149&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+    console.log(url,'this is url')
+    this.setState({loading:true})
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    // console.log(parsedData)
+    this.setState({articles: parsedData.articles})
+    this.setState({totalResults: parsedData.totalResults})
+    this.setState({loading:false})
+  }
+  //To work in local END
+
+//   // To work in vercel app START
+//   async componentDidMount() {
+//     this.fetchData();
+//  }
+
+//   fetchData = async () => {
+//       let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+//       console.log(url,'this is url')
+//       this.setState({loading:true})
+//       let data = await fetch(url);
+//       let parsedData = await data.json();
+//       // console.log(parsedData)
+//       // this.setState({articles: parsedData.articles})
+//       // this.setState({totalResults: parsedData.totalResults})
+//       // this.setState({loading:false})
+//       this.setState({
+//         articles: parsedData.articles,
+//         totalResults: parsedData.totalResults,
+//         loading:false,
+//     });
+// }
+//   //To work in vercel app END
 
 
 
   handlePrevClick = ()=> {
     console.log("Previous button clicked!")
     this.setState(
-      (prevState) => ({
-          page: prevState.page - 1,
-      }),
+      { page: this.state.page - 1 },
       () => {
-          console.log(this.state.page, "this.state.page previous before");
-          this.fetchData();
+        this.fetchData(); // Ensures `fetchData` is called after the state has updated
       }
     );
-   console.log(this.state.page, 'this.state.page previous after')
   }
 
   handleNextClick = ()=> {
     console.log("Next button clicked!")
     this.setState(
-      (prevState) => ({
-          page: prevState.page + 1,
-      }),
+      { page: this.state.page + 1 },
       () => {
-
-          console.log(this.state.page, "this.state.page next before");
-          this.setState()
-          if (this.state.page > Math.ceil(this.state.totalResults/this.props.pageSize)){
-
-          }
-          else{
-          this.fetchData();
-          }
+        this.fetchData(); // Ensures `fetchData` is called after the state has updated
       }
     );
-    console.log(this.state.page, 'this.state.page next after')
   }
 
   render() {
