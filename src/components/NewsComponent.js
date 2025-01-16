@@ -90,7 +90,7 @@ export default class NewsComponent extends Component {
       <div className='container my-3'>
         {/* {this.state.articles.map((element)=>{console.log(element)})} */}
         
-        <h2 className='my-4'>Top headlines - {this.props.category}</h2>
+        <h2 className='my-4'>Top headlines - {this.props.category === '' ? 'Home' : this.props.category}</h2>
         {this.state.loading && <Spinner/>}
           <div className="row">
           {!this.state.loading && this.state.articles.map((element)=>
@@ -102,7 +102,8 @@ export default class NewsComponent extends Component {
               newsUrl={element.url}
               author={element.author}
               publishedAt={element.publishedAt}
-              source={element.source.name}/>
+              source={element.source.name}
+              mode={this.props.mode}/>
               </div>
             }
                                   ) 
