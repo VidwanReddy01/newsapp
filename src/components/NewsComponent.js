@@ -68,7 +68,7 @@ export default class NewsComponent extends Component {
 
   fetchData = async (searchQuery) => {
       let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
-     // console.log(url,'this is url')
+      console.log(url,'this is url')
       this.setState({loading:true})
       let data = await fetch(url);
       let parsedData = await data.json();
