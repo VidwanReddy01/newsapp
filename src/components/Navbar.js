@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 
 export default class Navbar extends Component {
   render() {
+    console.log('Welcome Navbar')
     return (
         <nav className={`navbar navbar-expand-lg bg-${this.props.mode === 'light' ? 'light' : 'dark'} navbar-${this.props.mode === 'light' ? 'light' : 'dark'}`}>
         <div className="container-fluid">
@@ -30,7 +31,7 @@ export default class Navbar extends Component {
                     <li><Link className="dropdown-item" to="/sports">sports</Link></li>
                     <li><Link className="dropdown-item" to="/technology">technology</Link></li>
                   <li><hr className="dropdown-divider"/></li>
-                  <li><Link className="dropdown-item" to="/">general</Link></li>
+                  <li><Link className="dropdown-item" to="/general">general</Link></li>
                 </ul>
               </li>
               <li className="nav-item">
@@ -46,6 +47,19 @@ export default class Navbar extends Component {
         <input className="form-check-input" onClick={this.props.toggleMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Dark mode</label>
         </div>
+
+        <form className="d-flex" role="search">
+        <input className="form-control me-1" 
+            onChange={this.props.handleInputChange} // Update state on input change
+            type="search" 
+            // placeholder={`Search in this ${category || 'Category'}`}
+            placeholder="Search in this category"
+            aria-label="Search"
+            // value={this.props.searchQuery} // Controlled input
+            /> 
+        {/* <button className="btn btn-outline-success" type="submit">Search</button> */}
+      </form>
+
         </div>
       </nav>
     )
