@@ -70,6 +70,8 @@ export default class NewsComponent extends Component {
       let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
       console.log(url,'this is url')
       this.setState({loading:true})
+
+      try {
       let data = await fetch(url);
       let parsedData = await data.json();
       if (parsedData.totalResults !== 0){
@@ -89,7 +91,16 @@ export default class NewsComponent extends Component {
         });
         console.log('Nothing to show here!')
       }
-}
+      }
+    catch (error) {
+      console.error('Error fetching data:', error);
+      this.setState({
+          loading: false,
+          noResult: true,
+          errorMessage: 'An error occurred while fetching the data.',
+      });
+    }
+    }
   //To work in vercel app END
 
   // Call fetchData on component mount and when searchQuery prop changes
