@@ -5,9 +5,10 @@ export default async function handler(req, res) {
     const page = req.query.page || 1;
     const pageSize = req.query.pageSize || 10;
     const category = req.query.category || '';
+    const q = req.query.q || '' ;
 
     // const url = `${baseUrl}?country=${country}&apiKey=${apiKey}`;
-    const url = `${baseUrl}?country=${country}&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}&category=${category}`;
+    const url = `${baseUrl}?country=${country}&page=${page}&pageSize=${pageSize}&apiKey=${apiKey}&category=${category}&q=${q}`;
     console.log(url,'base url from api folder')
 
     try {

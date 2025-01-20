@@ -38,6 +38,7 @@ export default class NewsComponent extends Component {
   //   let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=fa1de05a901446959341d884be639149&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
   //   console.log(url,'this is url')
   //   this.setState({loading:true})
+  //   try{
   //   let data = await fetch(url);
   //   let parsedData = await data.json();
   //   if (parsedData.totalResults !== 0){
@@ -57,9 +58,19 @@ export default class NewsComponent extends Component {
   //     });
   //     console.log('Nothing to show here!')
   //   }
-    
+  // }
+  // catch (error) {
+  //         console.error('Error fetching data:', error);
+  //         this.setState({
+  //             loading: false,
+  //             noResult: true,
+  //             errorMessage: 'An error occurred while fetching the data.',
+  //         });
+  //       }
   // }
   // //To work in local END
+
+
 
   // To work in vercel app START
   async componentDidMount() {
@@ -67,6 +78,7 @@ export default class NewsComponent extends Component {
  }
 
   fetchData = async (searchQuery) => {
+      console.log(searchQuery,'searchQuery*****')
       let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
       console.log(url,'this is url')
       this.setState({loading:true})
