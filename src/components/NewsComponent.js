@@ -37,9 +37,10 @@ export default class NewsComponent extends Component {
   // }
 
   // fetchData = async (searchQuery) => {
+  //   let apiKey=process.env.REACT_APP_NEWSAPI_KEY;
   //   console.log(searchQuery,'searchQuery*****')
   //   this.props.setProgress(20);
-  //   let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=fa1de05a901446959341d884be639149&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
+  //   let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=${apiKey}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
   //   console.log(url,'this is url')
   //   this.setState({loading:true})
   //   try{
