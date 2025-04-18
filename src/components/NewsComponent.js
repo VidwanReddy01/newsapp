@@ -3,6 +3,7 @@ import NewsItemComponent from './NewsItemComponent'
 import Spinner from './Spinner.js'
 import PropTypes from 'prop-types'
 import NoResults from './NoResults.js'
+import InfiniteScroll from "react-infinite-scroll-component";
 // import Navbar from './Navbar.js'
 
 export default class NewsComponent extends Component {
@@ -23,7 +24,8 @@ export default class NewsComponent extends Component {
       page: 1,
       country: 'us',
       category: '',
-      noResult: false
+      noResult: false,
+      totalResults: 0
     }
     document.title = `Thisisnews - ${this.props.category === '' ? 'Home' : this.props.category}`;
   }
@@ -42,22 +44,36 @@ export default class NewsComponent extends Component {
   //   let data = await fetch(url);
   //   let parsedData = await data.json();
   //   if (parsedData.totalResults !== 0){
-  //     this.setState({
-  //     articles: parsedData.articles,
-  //     totalResults: parsedData.totalResults,
-  //     loading:false,
-  //     noResult: false
-  //   });
+  //     if(this.state.page===1){
+  //       this.setState({
+  //         articles: parsedData.articles,
+  //         totalResults: parsedData.totalResults,
+  //         loading:false,
+  //         noResult: false
+  //       });
+  //       }
+  //       else{
+  //       this.setState({
+  //       articles: this.state.articles.concat(parsedData.articles),
+  //       totalResults: parsedData.totalResults,
+  //       loading:false,
+  //       noResult: false
+  //     });
+  //   }
   //   }
   //   else{
   //     this.setState({
-  //       articles: parsedData.articles,
+  //       articles: this.state.articles.concat(parsedData.articles),
   //       totalResults: parsedData.totalResults,
   //       loading:false,
   //       noResult: true
   //     });
   //     console.log('Nothing to show here!')
   //   }
+
+  //   console.log(this.state.articles.length,'articles')
+  //   console.log(this.state.totalResults,'total results')
+
   // }
   // catch (error) {
   //         console.error('Error fetching data:', error);
@@ -87,16 +103,26 @@ export default class NewsComponent extends Component {
       let data = await fetch(url);
       let parsedData = await data.json();
       if (parsedData.totalResults !== 0){
-        this.setState({
-        articles: parsedData.articles,
-        totalResults: parsedData.totalResults,
-        loading:false,
-        noResult: false
-      });
+        if(this.state.page===1){
+          this.setState({
+            articles: parsedData.articles,
+            totalResults: parsedData.totalResults,
+            loading:false,
+            noResult: false
+          });
+          }
+          else{
+          this.setState({
+          articles: this.state.articles.concat(parsedData.articles),
+          totalResults: parsedData.totalResults,
+          loading:false,
+          noResult: false
+        });
+      }
       }
       else{
         this.setState({
-          articles: parsedData.articles,
+          articles: this.state.articles.concat(parsedData.articles),
           totalResults: parsedData.totalResults,
           loading:false,
           noResult: true
@@ -124,6 +150,16 @@ export default class NewsComponent extends Component {
       this.fetchData(this.props.searchQuery);
     }
   }
+
+  fetchMoreData = () => {
+      this.setState(
+        {
+        page: this.state.page + 1,
+        },
+      () => {
+        this.fetchData(); // Ensures `fetchData` is called after the state has updated
+      });
+  };
 
 
 
@@ -154,9 +190,17 @@ export default class NewsComponent extends Component {
         {/* {this.state.articles.map((element)=>{console.log(element)})} */}
         
         <h2 className='my-4'>Top headlines - {this.props.category === '' ? 'Home' : this.props.category}</h2>
-        {this.state.loading && <Spinner/>}
+        {/* {this.state.loading && <Spinner/>} */}
+        <InfiniteScroll
+          dataLength={this.state.articles.length}
+          next={this.fetchMoreData}
+          hasMore={this.state.articles.length < (this.state.totalResults - 5)}
+          loader={<Spinner/>}
+        >
+          
+          <div className="container">
           <div className="row">
-          {!this.state.loading && !this.state.noResult && this.state.articles.map((element)=>
+          {!this.state.noResult && this.state.articles.map((element)=>
             { return <div className='col-md-4' key={element.url} style={{maxHeight:'35rem', minHeight:'35rem'}}>
               <NewsItemComponent 
               title={element.title?element.title.slice(0,45):"No title found"} 
@@ -173,19 +217,20 @@ export default class NewsComponent extends Component {
                                   ) 
           }    
           </div>
-
+          </div>
+          </InfiniteScroll>
           {!this.state.loading && this.state.noResult && (
                 // <p style={{ textAlign: 'center', marginTop: '20px' }}>No results found</p>
                 <NoResults/>
             )}
 
 
-          <div className="container d-flex justify-content-end">
+          {/* <div className="container d-flex justify-content-end">
             <div className="btn-group" role="group" aria-label="Basic outlined example">
-              <button disabled={this.state.page<=1} type="button" onClick={this.handlePrevClick} className="btn btn-outline-primary">Previous</button>  {/* //this.handlePrevClick, here we are using this. becase we are use class based component */}
-              <button disabled={this.state.page>= Math.ceil(this.state.totalResults/this.props.pageSize)} type="button" onClick={this.handleNextClick} className="btn btn-outline-primary">Next</button>  {/* //this.handleNextClick, here we are using this. becase we are use class based component */}
+              <button disabled={this.state.page<=1} type="button" onClick={this.handlePrevClick} className="btn btn-outline-primary">Previous</button>  //this.handlePrevClick, here we are using this. becase we are use class based component
+              <button disabled={this.state.page>= Math.ceil(this.state.totalResults/this.props.pageSize)} type="button" onClick={this.handleNextClick} className="btn btn-outline-primary">Next</button>  //this.handleNextClick, here we are using this. becase we are use class based component
             </div>
-          </div>
+          </div> */}
         
       </div>
     )
