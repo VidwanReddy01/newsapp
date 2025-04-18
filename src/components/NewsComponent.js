@@ -190,15 +190,15 @@ export default class NewsComponent extends Component {
         {/* {this.state.articles.map((element)=>{console.log(element)})} */}
         
         <h2 className='my-4'>Top headlines - {this.props.category === '' ? 'Home' : this.props.category}</h2>
-        {/* {this.state.loading && <Spinner/>} */}
+        {this.state.loading && <Spinner/>}
         <InfiniteScroll
           dataLength={this.state.articles.length}
           next={this.fetchMoreData}
-          hasMore={this.state.articles.length < (this.state.totalResults - 5)}
+          hasMore={this.state.articles.length < (this.state.totalResults - 6)} //this - 6 is used to tackle a scenario where totalResults say 36 but the actual results are 30, to avoid the loading animation to keep on loading even when there is no data left to load.
           loader={<Spinner/>}
         >
           
-          <div className="container">
+          {/* <div className="container"> */}
           <div className="row">
           {!this.state.noResult && this.state.articles.map((element)=>
             { return <div className='col-md-4' key={element.url} style={{maxHeight:'35rem', minHeight:'35rem'}}>
@@ -217,7 +217,7 @@ export default class NewsComponent extends Component {
                                   ) 
           }    
           </div>
-          </div>
+          {/* </div> */}
           </InfiniteScroll>
           {!this.state.loading && this.state.noResult && (
                 // <p style={{ textAlign: 'center', marginTop: '20px' }}>No results found</p>

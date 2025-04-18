@@ -8,7 +8,7 @@ class Spinner extends Component {
       //   <div className="spinner"></div>
       //  </div>
       <div className="text-center1" id="page">
-        <div className="spinner" id="container">
+        <div className="spinne my-3" id="container">
             <div id="ring"></div>
             <div id="ring"></div>
             <div id="ring"></div>
