@@ -32,17 +32,21 @@ export default class NewsComponent extends Component {
 
   // //To work in local START
   // async componentDidMount(){
+  //   this.props.setProgress(10);
   //   this.fetchData()
   // }
 
   // fetchData = async (searchQuery) => {
   //   console.log(searchQuery,'searchQuery*****')
+  //   this.props.setProgress(20);
   //   let url = `https://newsapi.org/v2/top-headlines?country=${this.state.country}&apiKey=fa1de05a901446959341d884be639149&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
   //   console.log(url,'this is url')
   //   this.setState({loading:true})
   //   try{
   //   let data = await fetch(url);
+  //   this.props.setProgress(30);
   //   let parsedData = await data.json();
+  //   this.props.setProgress(50);
   //   if (parsedData.totalResults !== 0){
   //     if(this.state.page===1){
   //       this.setState({
@@ -60,6 +64,7 @@ export default class NewsComponent extends Component {
   //       noResult: false
   //     });
   //   }
+  //   this.props.setProgress(100);
   //   }
   //   else{
   //     this.setState({
@@ -69,6 +74,7 @@ export default class NewsComponent extends Component {
   //       noResult: true
   //     });
   //     console.log('Nothing to show here!')
+  //     this.props.setProgress(100);
   //   }
 
   //   console.log(this.state.articles.length,'articles')
@@ -82,6 +88,7 @@ export default class NewsComponent extends Component {
   //             noResult: true,
   //             errorMessage: 'An error occurred while fetching the data.',
   //         });
+  //      this.props.setProgress(0);
   //       }
   // }
   // //To work in local END
@@ -90,18 +97,22 @@ export default class NewsComponent extends Component {
 
   // To work in vercel app START
   async componentDidMount() {
+    this.props.setProgress(10);
     this.fetchData();
  }
 
   fetchData = async (searchQuery) => {
       console.log(searchQuery,'searchQuery*****')
+      this.props.setProgress(20);
       let url = `/api/news?country=${this.state.country}&category=${this.props.category}&page=${this.state.page}&pageSize=${this.props.pageSize}&q=${searchQuery === undefined ? '' : searchQuery}`;
       console.log(url,'this is url')
       this.setState({loading:true})
 
       try {
       let data = await fetch(url);
+      this.props.setProgress(30);
       let parsedData = await data.json();
+      this.props.setProgress(50);
       if (parsedData.totalResults !== 0){
         if(this.state.page===1){
           this.setState({
@@ -119,6 +130,7 @@ export default class NewsComponent extends Component {
           noResult: false
         });
       }
+      this.props.setProgress(100);
       }
       else{
         this.setState({
@@ -128,6 +140,7 @@ export default class NewsComponent extends Component {
           noResult: true
         });
         console.log('Nothing to show here!')
+        this.props.setProgress(100);
       }
       }
     catch (error) {
@@ -137,6 +150,7 @@ export default class NewsComponent extends Component {
           noResult: true,
           errorMessage: 'An error occurred while fetching the data.',
       });
+      this.props.setProgress(0);
     }
     }
   //To work in vercel app END
